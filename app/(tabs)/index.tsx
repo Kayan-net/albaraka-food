@@ -1,75 +1,67 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { ThemedText, ThemedView } from '@/components/Themed';
+import { Ionicons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
+import { Image, ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView className="flex-1 bg-white">
+      <ScrollView className="px-4 pt-4">
+        {/* Header */}
+        <View className="flex-row justify-between items-center mb-4">
+          <ThemedText className="text-2xl font-bold text-orange-700">Al Barakah</ThemedText>
+          <Ionicons name="restaurant" size={28} color="#D97706" />
+        </View>
+
+        {/* Welcome Banner */}
+        <View className="mb-4">
+          <Image
+            source={{ uri: 'https://source.unsplash.com/600x300/?restaurant,food' }}
+            className="w-full h-48 rounded-2xl"
+            resizeMode="cover"
+          />
+          <ThemedText className="mt-2 text-lg text-gray-600">
+            Dine-In & Takeaway • 7:00 AM – 10:00 PM
+          </ThemedText>
+        </View>
+
+        {/* Categories */}
+        <ThemedText className="text-xl font-semibold mb-2">Categories</ThemedText>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row gap-3">
+          {['Biryani', 'Mixed Grill', 'Chinese', 'Vegetarian', 'Specials'].map((cat) => (
+            <Link
+              key={cat}
+              href={`/menu?category=${cat}`}
+              className="bg-orange-100 px-4 py-2 rounded-xl border border-orange-300"
+            >
+              <ThemedText className="text-orange-700 font-medium">{cat}</ThemedText>
+            </Link>
+          ))}
+        </ScrollView>
+
+        {/* Promotions */}
+        <ThemedText className="text-xl font-semibold mt-6 mb-2">Today’s Specials</ThemedText>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row gap-4">
+          {[1, 2].map((item) => (
+            <ThemedView
+              key={item}
+              className="w-60 bg-orange-50 rounded-2xl p-3 shadow-md"
+            >
+              <Image
+                source={{ uri: 'https://source.unsplash.com/300x200/?indian-food' }}
+                className="w-full h-28 rounded-xl"
+              />
+              <ThemedText className="mt-2 font-bold text-lg text-orange-800">
+                Chicken Tikka Biryani
+              </ThemedText>
+              <ThemedText className="text-gray-600">Spicy & flavorful with raita</ThemedText>
+              <ThemedText className="mt-1 text-orange-700 font-semibold">R89.99</ThemedText>
+            </ThemedView>
+          ))}
+        </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
