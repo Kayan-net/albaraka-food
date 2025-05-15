@@ -5,13 +5,24 @@ import { Image, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
+const PlaceholderImage = require("../../assets/images/react-logo.png");
+
+
+
 export default function HomeScreen() {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView className="px-4 pt-4">
         {/* Header */}
         <View className="flex-row justify-between items-center mb-4">
-          <ThemedText className="text-2xl font-bold text-orange-700">Al Barakah</ThemedText>
+          <Image
+            source={PlaceholderImage}
+            className="w-12 h-12 rounded-full border border-orange-500"
+            resizeMode="cover"
+          />
+          <ThemedText className="text-3xl font-bold text-orange-800">
+            Welcome To Al Barakah Restaurant & Cafe
+          </ThemedText>
           <Ionicons name="restaurant" size={28} color="#D97706" />
         </View>
 
@@ -22,7 +33,7 @@ export default function HomeScreen() {
             className="w-full h-48 rounded-2xl"
             resizeMode="cover"
           />
-          <ThemedText className="mt-2 text-lg text-gray-600">
+          <ThemedText className="mt-2 text-lg text-blue-600">
             Dine-In & Takeaway • 7:00 AM – 10:00 PM
           </ThemedText>
         </View>
